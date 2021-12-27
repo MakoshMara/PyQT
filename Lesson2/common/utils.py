@@ -18,12 +18,14 @@ def get_message(client):
         json_response = encoded_response.decode(ENCODING)
         response = json.loads(json_response)
         if isinstance(response, dict):
+            print(response)
             return response
         raise IncorrectDataRecivedError
     raise IncorrectDataRecivedError
 
-@log
+
 def send_meccage(sock, message):
+    print(f'{message}')
     if not isinstance(message,dict):
         raise TypeError
     from common.variables import ENCODING
