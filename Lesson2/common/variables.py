@@ -29,3 +29,5 @@ RESPONSE_400 = {
 
 LOGGING_LEVEL = logging.DEBUG
 FORMATTER_DEFAULT = logging.Formatter('%(asctime)s %(levelname) -8s %(filename) -11s %(message)s')
+
+SERVER_DATABASE = 'sqlite:///server_base.db3'

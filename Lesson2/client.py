@@ -140,7 +140,6 @@ def create_presence(account_name):
 def process_answer(message):
     if RESPONSE in message:
         if message[RESPONSE] == 200:
-            CLIENT_LOGGER.debug(f'Сообщение успешно обработано сервером')
             return '200: все норм'
         CLIENT_LOGGER.error(f'При обработке сервером обнаружена ошибка:{message[ERROR]}')
         return f'400:{message[ERROR]}'
