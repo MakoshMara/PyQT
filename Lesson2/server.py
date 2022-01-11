@@ -52,11 +52,12 @@ class Server(threading.Thread, metaclass=ServerMaker):
         transport = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         transport.bind((self.addr, self.port))
         transport.settimeout(0.5)
+        transport.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock = transport
         self.sock.listen()
 
     def process_client_massage(self, message, client):
-        print(f'Идет разбор сообщения от {message[USER][ACCOUNT_NAME]}')
+        print(f'Идет разбор сообщения от {client}')
         if ACTION in message and message[ACTION] == PRESENCE and TIME in message \
                 and USER in message:
             if message[USER][ACCOUNT_NAME] not in self.names.keys():
@@ -76,18 +77,19 @@ class Server(threading.Thread, metaclass=ServerMaker):
                 and SENDER in message and MESSAGE_TEXT in message:
             self.messages.append(message)
             return
-        elif ACTION in message and message[ACTION] == EXIT and message[ACCOUNT_NAME] in message:
+        elif message[ACTION] == EXIT in message:
             SERVER_LOGGER.info(f'получено сообщение о выходе пользователя {message[ACCOUNT_NAME]}.')
             self.database.user_logout(message[ACCOUNT_NAME])
             self.clients.remove(self.names[message[ACCOUNT_NAME]])
             self.names[message[ACCOUNT_NAME]].close()
             del self.names[message[ACCOUNT_NAME]]
             return
-
         else:
+            print(message)
             response = RESPONSE_400
             response[ERROR] = 'Запрос некорректен.'
             send_meccage(client, response)
+            self.database.user_logout(message[ACCOUNT_NAME])
             return
 
     def run(self):
@@ -114,7 +116,9 @@ class Server(threading.Thread, metaclass=ServerMaker):
             if recv_data_lst:
                 for client_with_message in recv_data_lst:
                     try:
-                        self.process_client_massage(get_message(client_with_message),client_with_message)
+                        message = get_message(client_with_message)
+                        print(message,client_with_message)
+                        self.process_client_massage(message,client_with_message)
                     except:
                         SERVER_LOGGER.info(f'Клиент {client_with_message.getpeername()} отключился от сервера.')
                         self.clients.remove(client_with_message)
