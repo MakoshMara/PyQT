@@ -18,8 +18,8 @@ while True:
                                           creationflags=subprocess.CREATE_NEW_CONSOLE))
         # PROCESSES.append(subprocess.Popen('python client.py -n test2',
         #                                   creationflags=subprocess.CREATE_NEW_CONSOLE))
-        # PROCESSES.append(subprocess.Popen('python client.py -n test3',
-        #                                   creationflags=subprocess.CREATE_NEW_CONSOLE))
+        PROCESSES.append(subprocess.Popen('python client.py -n test3',
+                                          creationflags=subprocess.CREATE_NEW_CONSOLE))
     elif ACTION == 'x':
         while PROCESSES:
             VICTIM = PROCESSES.pop()
