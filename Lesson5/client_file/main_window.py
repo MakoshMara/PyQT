@@ -6,6 +6,7 @@ import sys
 import logging
 
 from client_file.del_contact import DelContactDialog
+from common.variables import SENDER, MESSAGE_TEXT
 
 sys.path.append('../')
 from client_file.main_window_conv import Ui_MainClientWindow
@@ -232,8 +233,13 @@ class ClientMainWindow(QMainWindow):
             self.current_chat = None
         self.clients_list_update()
 
-    @pyqtSlot(str)
-    def message(self, sender):
+    @pyqtSlot(dict)
+    def message(self, message):
+        sender = message[SENDER]
+        self.database.save_message(
+            self.current_chat,
+            'in',message[MESSAGE_TEXT]
+            )
         if sender == self.current_chat:
             self.history_list_update()
         else:
@@ -244,6 +250,10 @@ class ClientMainWindow(QMainWindow):
                                           f'Получено новое сообщение от {sender}, открыть чат с ним?', QMessageBox.Yes,
                                           QMessageBox.No) == QMessageBox.Yes:
                     self.current_chat = sender
+                    self.database.save_message(
+                        self.current_chat,
+                        'in', message[MESSAGE_TEXT]
+                    )
                     self.set_active_user()
             else:
                 print('NO')
@@ -256,6 +266,10 @@ class ClientMainWindow(QMainWindow):
                               QMessageBox.No) == QMessageBox.Yes:
                     self.add_contact(sender)
                     self.current_chat = sender
+                    self.database.save_message(
+                        self.current_chat,
+                        'in', message[MESSAGE_TEXT]
+                    )
                     self.set_active_user()
 
     # Слот потери соединения
@@ -264,6 +278,21 @@ class ClientMainWindow(QMainWindow):
     def connection_lost(self):
         self.messages.warning(self, 'Сбой соединения', 'Потеряно соединение с сервером. ')
         self.close()
+
+    @pyqtSlot()
+    def sig_205(self):
+        '''
+        Слот выполняющий обновление баз данных по команде сервера.
+        '''
+        if self.current_chat and not self.database.check_user(
+                self.current_chat):
+            self.messages.warning(
+                self,
+                'Сочувствую',
+                'К сожалению собеседник был удалён с сервера.')
+            self.set_disabled_input()
+            self.current_chat = None
+        self.clients_list_update()
 
     def make_connection(self, trans_obj):
         trans_obj.new_msg.connect(self.message)

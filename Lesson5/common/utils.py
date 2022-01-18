@@ -14,15 +14,12 @@ def get_message(client):
 
 
     encoded_response = client.recv(MAX_PACAGE_LEGTH)
-    if isinstance(encoded_response, bytes):
-        print(encoded_response)
-        json_response = encoded_response.decode(ENCODING)
-        response = json.loads(json_response)
-        if isinstance(response, dict):
-            print(response)
-            return response
-        raise IncorrectDataRecivedError
-    raise IncorrectDataRecivedError
+    json_response = encoded_response.decode(ENCODING)
+    response = json.loads(json_response)
+    if isinstance(response, dict):
+        return response
+    else:
+        raise TypeError
 
 
 def send_meccage(sock, message):

@@ -36,7 +36,6 @@ class ClientTransport(threading.Thread, QObject):
             self.user_list_request()
             self.contacts_list_request()
         except OSError as err:
-            print(err)
             if err.errno:
                 logger.critical(f'Потеряно соединение с сервером:{err}.')
                 raise ServerError('Потеряно соединение с сервером!')
@@ -113,6 +112,7 @@ class ClientTransport(threading.Thread, QObject):
         return out
 
     def process_answer(self, message):
+        logger.debug(f'{message}')
         if RESPONSE in message:
             if message[RESPONSE] == 200:
                 return '200: все норм'
@@ -234,8 +234,8 @@ class ClientTransport(threading.Thread, QObject):
                 logger.critical('Потеряно соединение с сервером.')
 
     def run(self):
-        logger.debug('Запущен процесс - приёмник собщений с сервера.')
         while self.running:
+            logger.debug('Запущен процесс - приёмник собщений с сервера.')
             time.sleep(1)
             message = None
             with socket_lock:
@@ -251,8 +251,8 @@ class ClientTransport(threading.Thread, QObject):
                     logger.debug(f'Потеряно соединение с сервером:{err}.')
                     self.running = False
                     self.connection_lost.emit()
-                else:
-                    logger.debug(f'Принято сообщение с сервера: {message}')
-                    self.process_answer(message)
                 finally:
                     self.transport.settimeout(5)
+            if message:
+                logger.debug(f'Принято сообщение с сервера: {message}')
+                self.process_answer(message)

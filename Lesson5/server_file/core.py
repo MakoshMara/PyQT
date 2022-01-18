@@ -119,10 +119,10 @@ class MessageProcessor(threading.Thread):
             if message[DESTINATION] in self.names:
                 self.process_message(message)
                 self.database.process_message(message[SENDER], message[DESTINATION])
-                try:
-                    send_meccage(client, RESPONSE_200)
-                except OSError:
-                    self.remove_client(client)
+                # try:
+                #     send_meccage(client, RESPONSE_200)
+                # except OSError:
+                #     self.remove_client(client)
             else:
                 response = RESPONSE_400
                 response[ERROR] = 'Пользователь не зарегистрирован на сервере.'
