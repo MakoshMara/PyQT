@@ -13,7 +13,7 @@ def main():
             # Запускаем сервер!
             process.append(
                 subprocess.Popen(
-                    'python server.py',
+                    'python server.py ',
                     creationflags=subprocess.CREATE_NEW_CONSOLE))
         elif action == 'k':
             print('Убедитесь, что на сервере зарегистрировано необходимо количество клиентов с паролем 123.')
