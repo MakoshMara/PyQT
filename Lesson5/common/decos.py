@@ -11,6 +11,13 @@ else:
     LOGGER = logging.getLogger('client_file')
 
 def log(func_to_log):
+    """
+    Декоратор, выполняющий логирование вызовов функций.
+    Сохраняет события типа debug, содержащие
+    информацию о имени вызываемой функиции, параметры с которыми
+    вызывается функция, и модуль, вызывающий функцию.
+    """
+
     def log_saver(*args,**kwargs):
         ret = func_to_log(*args,**kwargs)
         name_of_component = re.split(r'\\|"',traceback.format_stack()[0].split(",")[0])[-2]

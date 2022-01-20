@@ -4,6 +4,10 @@ import os
 
 from common.variables import LOGGING_LEVEL, FORMATTER_DEFAULT
 
+'''
+Конфигуратор логов клиента
+'''
+
 FORMATTER = FORMATTER_DEFAULT
 PATH = os.path.dirname(os.path.abspath(__file__))
 PATH = os.path.join(PATH,'client.log')

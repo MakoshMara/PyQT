@@ -1,5 +1,4 @@
 import threading
-import logging
 import select
 import socket
 import json
@@ -8,7 +7,7 @@ import binascii
 import os
 import sys
 
-from descrptrs import Port
+from common.descrptrs import Port
 
 sys.path.append('../')
 
@@ -18,6 +17,11 @@ from common.utils import get_message, send_meccage
 SERVER_LOGGER = logging.getLogger('server')
 
 class MessageProcessor(threading.Thread):
+    """
+    Основной класс сервера. Принимает содинения, словари - пакеты
+    от клиентов, обрабатывает поступающие сообщения.
+    Работает в качестве отдельного потока.
+    """
     port = Port()
 
     def __init__(self, listen_address, listen_port, database):
@@ -35,7 +39,7 @@ class MessageProcessor(threading.Thread):
 
 
     def init_socket(self):
-
+        '''Метод инициализатор сокета.'''
         SERVER_LOGGER.info(
                     f'Запущен сервер, порт для подключений: {self.port}, '
                     f'адрес с которого принимаются подключения: {self.addr}. '
@@ -48,6 +52,7 @@ class MessageProcessor(threading.Thread):
         self.sock.listen()
 
     def run(self):
+        '''Метод основной цикл потока.'''
         self.init_socket()
         while self.running:
             try:
@@ -79,6 +84,10 @@ class MessageProcessor(threading.Thread):
                         self.remove_client(client_with_message)
 
     def remove_client(self, client):
+        '''
+        Метод обработчик клиента с которым прервана связь.
+        Ищет клиента и удаляет его из списков и базы:
+        '''
         SERVER_LOGGER.info(f'Клиент {client.getpeername()} отключился от сервера.')
         for name in self.names:
             if self.names[name] == client:
@@ -89,6 +98,9 @@ class MessageProcessor(threading.Thread):
         client.close()
 
     def process_message(self, message):
+        '''
+        Метод отправки сообщения клиенту.
+        '''
         if message[DESTINATION] in self.names and self.names[message[DESTINATION]
         ] in self.listen_sockets:
             try:
@@ -109,6 +121,7 @@ class MessageProcessor(threading.Thread):
                 f'отправка сообщения невозможна.')
 
     def process_client_massage(self, message, client):
+        """ Метод обработчик поступающих сообщений. """
         print(f'Идет разбор сообщения {message}')
         if ACTION in message and message[ACTION] == PRESENCE and TIME in message \
                 and USER in message:
@@ -278,6 +291,7 @@ class MessageProcessor(threading.Thread):
                 sock.close()
 
     def service_update_lists(self):
+        '''Метод реализующий отправки сервисного сообщения 205 клиентам.'''
         for client in self.names:
             try:
                 send_meccage(self.names[client], RESPONSE_205)

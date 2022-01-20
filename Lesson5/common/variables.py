@@ -1,3 +1,7 @@
+'''
+Сборник констант
+'''
+
 import logging
 
 DEFAULT_PORT = 7777

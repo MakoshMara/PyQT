@@ -3,21 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="4b4ebaac-5c22-4a6c-a6ca-b944052d653e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_file/add_contact.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/add_contact.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_file/client_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/client_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_file/del_contact.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/del_contact.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_file/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_file/main_window_conv.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/main_window_conv.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_file/transp.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/transp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client_file/user_name_dialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_file/user_name_dialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_send.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/client.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log.2021-12-13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log.2021-12-23" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log.2021-12-28" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log.2022-01-12" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/server.log.2022-01-13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/variables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decos.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/decos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/descrptrs.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/descrptrs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/config_client_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/logs/config_client_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/config_server_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/logs/config_server_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/metaclasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/metaclasses.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server_file/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_file/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_gui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_file/server_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_file/server_database.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +62,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PanovaM\Desktop\Geekbrains\PyQT\Lesson5\common" />
       <recent name="C:\Users\PanovaM\Desktop\Geekbrains\PyQT\Lesson5\server_file" />
       <recent name="C:\Users\PanovaM\Desktop\Geekbrains\PyQT\Lesson5\client_file" />
     </key>
@@ -194,22 +199,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/server.py</url>
-          <line>51</line>
+          <line>53</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/client.py</url>
-          <line>115</line>
+          <line>119</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/server.py</url>
-          <line>35</line>
+          <line>34</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/server.py</url>
-          <line>26</line>
+          <line>25</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

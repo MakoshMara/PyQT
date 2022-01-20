@@ -11,15 +11,19 @@ from client_file.transp import ClientTransport
 from client_file.user_name_dialog import UserNameDialog
 from client_file.client_database import ClientDatabase
 from common.variables import DEFAULT_IP_ADRESS, DEFAULT_PORT
-
-from decos import log
-from errors import ServerError
+from common.decos import log
+from common.errors import ServerError
 
 CLIENT_LOGGER = logging.getLogger('client_file')
 
 
 @log
 def arg_parser():
+    """
+    Парсер аргументов командной строки, возвращает кортеж из 4 элементов
+    адрес сервера, порт, имя пользователя, пароль.
+    Выполняет проверку на корректность номера порта.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('addr', default=DEFAULT_IP_ADRESS, nargs='?')
     parser.add_argument('port', default=DEFAULT_PORT, type=int, nargs='?')
@@ -31,17 +35,17 @@ def arg_parser():
     client_name = namespace.name
     client_passwd = namespace.password
 
-
     # проверим подходящий номер порта
     if not 1023 < server_port < 65536:
         CLIENT_LOGGER.critical(
             f'Попытка запуска клиента с неподходящим номером порта: {server_port}. '
             f'Допустимы адреса с 1024 до 65535. Клиент завершается.')
 
-    return server_address, server_port, client_name,client_passwd
+    return server_address, server_port, client_name, client_passwd
+
 
 if __name__ == '__main__':
-    server_adr, server_port, client_name,client_passwd = arg_parser()
+    server_adr, server_port, client_name, client_passwd = arg_parser()
 
     client_app = QApplication(sys.argv)
     user_name_dialog = UserNameDialog()
@@ -72,7 +76,7 @@ if __name__ == '__main__':
 
     try:
         transport = ClientTransport(server_port, server_adr, database, client_name, client_passwd,
-            keys)
+                                    keys)
     except ServerError as error:
         message = QMessageBox()
         message.critical(user_name_dialog, 'Ошибка сервера', error.text)
@@ -81,7 +85,7 @@ if __name__ == '__main__':
     transport.setDaemon(True)
     transport.start()
 
-    main_window = ClientMainWindow(database, transport,keys)
+    main_window = ClientMainWindow(database, transport, keys)
     main_window.make_connection(transport)
     main_window.setWindowTitle(f'Чат Программа alpha release - {client_name}')
     client_app.exec_()

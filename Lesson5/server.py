@@ -4,25 +4,24 @@ import sys
 import argparse
 import threading
 
-from decos import log
-
-from server_file.server_database import DataBase
-
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
 
 from server_file.core import MessageProcessor
-
 from server_file.main_window import MainWindow
+from server_file.server_database import DataBase
 from common.variables import *
+from common.decos import log
 
 SERVER_LOGGER = logging.getLogger('server')
 
 new_connection = False
 conflag_lock = threading.Lock()
 
+
 @log
 def arg_parser(default_port, default_address):
+    '''Парсер аргументов коммандной строки.'''
     SERVER_LOGGER.debug(
         f'Инициализация парсера аргументов коммандной строки: {sys.argv}')
     parser = argparse.ArgumentParser()
@@ -34,7 +33,9 @@ def arg_parser(default_port, default_address):
     SERVER_LOGGER.debug('Аргументы успешно загружены.')
     return listen_address, listen_port
 
+
 def config_load():
+    '''Парсер конфигурационного ini файла.'''
     config = configparser.ConfigParser()
     dir_path = os.path.dirname(os.path.realpath(__file__))
     config.read(f"{dir_path}/{'server+++.ini'}")
@@ -48,8 +49,10 @@ def config_load():
         config.set('SETTINGS', 'Database_file', 'server_database.db3')
         return config
 
+
 @log
 def main():
+    '''Основная функция'''
     config = config_load()
 
     listen_address, listen_port = arg_parser(
@@ -60,7 +63,7 @@ def main():
             config['SETTINGS']['Database_path'],
             config['SETTINGS']['Database_file']))
 
-    server = MessageProcessor(listen_address, listen_port,database)
+    server = MessageProcessor(listen_address, listen_port, database)
     server.daemon = True
     server.start()
 
@@ -71,7 +74,6 @@ def main():
 
     server_app.exec_()
     server.running = False
-
 
 
 if __name__ == '__main__':
